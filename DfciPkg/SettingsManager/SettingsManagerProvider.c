@@ -344,7 +344,7 @@ SetProviderValueFromAscii(
   return Status;
 }
 
-#define ENABLED_STRING_SIZE  (9)
+#define ENABLED_STRING_SIZE  (13)
 #define ASSET_TAG_STRING_MAX_SIZE  (22)
 #define SECURE_BOOT_ENUM_STRING_SIZE  (20)
 #define SYSTEM_PASSWORD_STATE_STRING_SIZE  (30)
@@ -397,8 +397,11 @@ ProviderValueAsAscii(DFCI_SETTING_PROVIDER *Provider, BOOLEAN Current)
         DEBUG((DEBUG_ERROR, "Failed - Couldn't allocate for string. \n"));
         break;
       }
-      if (v) {
+      if (v == ENABLE_TRUE) {
         AsciiStrCpyS(Value, ENABLED_STRING_SIZE , "Enabled");
+      }
+      else if (v == ENABLE_INCONSISTENT) {
+        AsciiStrCpyS(Value, ENABLED_STRING_SIZE , "Inconsistent");
       }
       else {
         AsciiStrCpyS(Value, ENABLED_STRING_SIZE, "Disabled");
